@@ -5,6 +5,7 @@ import logo from "../../assets/logo.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const StartPage = () => {
   const [isRegistering, setIsRegistering] = useState(true);
@@ -19,6 +20,7 @@ const StartPage = () => {
     confirmPasswordValid: true,
   });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -41,7 +43,6 @@ const StartPage = () => {
       setValidation((prev) => ({
         ...prev,
         passwordValid: value.length >= 6,
-        // Перевіряємо confirmPassword при зміні password
         confirmPasswordValid: value === formData.confirmPassword,
       }));
     }
@@ -141,6 +142,7 @@ const StartPage = () => {
 
       if (user) {
         toast.success("Login successful!");
+        setIsLoading(true); // Показати лоадер
         setTimeout(() => navigate("/home"), 1000);
       } else {
         setError("Invalid email or password.");
@@ -153,6 +155,8 @@ const StartPage = () => {
 
   return (
     <div className={styles.container}>
+      {isLoading && <Loader />}
+
       <div className={styles.leftPanel}>
         <div className={styles.welcome}>Welcome</div>
         <img src={logo} alt="Logo" className={styles.logo} />
