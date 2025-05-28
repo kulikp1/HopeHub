@@ -140,7 +140,7 @@ const StartPage = () => {
       );
 
       if (user) {
-        toast.success("🎉 Login successful!");
+        toast.success("Login successful!");
         setTimeout(() => navigate("/home"), 1000);
       } else {
         setError("Invalid email or password.");
