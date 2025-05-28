@@ -102,7 +102,7 @@ const StartPage = () => {
 
       if (!registerResponse.ok) throw new Error("Registration failed.");
 
-      toast.success("✅ Registration successful!");
+      toast.success("Registration successful!");
       setFormData({ email: "", password: "", confirmPassword: "" });
       setIsRegistering(false);
     } catch (err) {
