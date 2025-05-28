@@ -1,0 +1,207 @@
+.pageWrapper {
+  height: 100vh;
+  /* overflow: auto; */
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #ffe5ec, #ffffff);
+}
+
+.leftPanel {
+  background: linear-gradient(135deg, #ff6b81, #f78ca0);
+  color: white;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.welcome {
+  font-size: 3.5rem;
+  font-weight: bold;
+  transform: rotate(-90deg);
+  position: absolute;
+  left: -90px;
+  top: 50%;
+  opacity: 0.2;
+}
+
+.logo {
+  width: 180px;
+  height: auto;
+  margin: 20px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.intro {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 30px;
+  line-height: 1.4;
+  max-width: 80%;
+}
+
+.rightPanel {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  /* overflow-y: auto; */
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.loginHeader {
+  font-size: 2.2rem;
+  color: #ff6b81;
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputGroup input,
+.inputGroup textarea,
+.inputGroup select {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus,
+.inputGroup select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ff6b81;
+  transform: scale(1.02);
+}
+
+.inputGroup textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.calendarContainer {
+  margin-top: 10px;
+}
+
+.calendarLabel {
+  display: block;
+  margin-bottom: 8px;
+  color: #ff6b81;
+  font-weight: 600;
+}
+
+.loginBtn {
+  margin-top: 20px;
+  padding: 12px 40px;
+  background: #ff6b81;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 20px rgba(255, 107, 129, 0.3);
+}
+
+.loginBtn:hover {
+  background: #ff4d6d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+}
+
+/* 🔽 Адаптація для мобільних */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .leftPanel,
+  .rightPanel {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .welcome {
+    display: none;
+  }
+
+  .form {
+    padding: 20px;
+  }
+}
+.calendarWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.calendarLabel {
+  margin-bottom: 8px;
+  color: #ff6b81;
+  font-weight: 600;
+}
+
+.calendarToggle {
+  margin-top: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #ff6b81;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calendarToggle:hover {
+  background-color: #ff6b81;
+  color: white;
+}
+
+.calendarPopupAbove {
+  position: absolute;
+  bottom: 60px; /* Піднімає над кнопкою */
+  z-index: 10;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
+
+.errorText {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
