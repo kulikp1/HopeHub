@@ -4,52 +4,107 @@ import { FaUser, FaLock } from "react-icons/fa";
 import logo from "../../assets/logo.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const StartPage = () => {
   const [isRegistering, setIsRegistering] = useState(true);
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
     confirmPassword: "",
   });
+  const [validation, setValidation] = useState({
+    emailValid: true,
+    passwordValid: true,
+    confirmPasswordValid: true,
+  });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
+
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      setValidation((prev) => ({
+        ...prev,
+        emailValid: emailRegex.test(value),
+      }));
+    }
+
+    if (name === "password") {
+      setValidation((prev) => ({
+        ...prev,
+        passwordValid: value.length >= 6,
+        // Перевіряємо confirmPassword при зміні password
+        confirmPasswordValid: value === formData.confirmPassword,
+      }));
+    }
+
+    if (name === "confirmPassword") {
+      setValidation((prev) => ({
+        ...prev,
+        confirmPasswordValid: value === formData.password,
+      }));
+    }
+
     setError("");
   };
 
   const handleRegister = async () => {
-    const { username, password, confirmPassword } = formData;
+    const { email, password, confirmPassword } = formData;
 
-    if (!username || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       setError("Please fill in all fields.");
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (!validation.emailValid) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    if (!validation.passwordValid) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (!validation.confirmPasswordValid) {
       setError("Passwords do not match.");
       return;
     }
 
     try {
       const response = await fetch(
+        "https://683765a02c55e01d1849bbe3.mockapi.io/users"
+      );
+      const users = await response.json();
+
+      const existingUser = users.find((u) => u.email === email);
+      if (existingUser) {
+        setError("Email is already registered.");
+        return;
+      }
+
+      const registerResponse = await fetch(
         "https://683765a02c55e01d1849bbe3.mockapi.io/users",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify({ email, password }),
         }
       );
 
-      if (!response.ok) throw new Error("Registration failed.");
+      if (!registerResponse.ok) throw new Error("Registration failed.");
 
       toast.success("✅ Registration successful!");
-      setFormData({ username: "", password: "", confirmPassword: "" });
-      setIsRegistering(false); // Перейти до логіну після реєстрації
+      setFormData({ email: "", password: "", confirmPassword: "" });
+      setIsRegistering(false);
     } catch (err) {
       setError("Failed to register. Try again later.");
       console.log(err);
@@ -57,10 +112,20 @@ const StartPage = () => {
   };
 
   const handleLogin = async () => {
-    const { username, password } = formData;
+    const { email, password } = formData;
 
-    if (!username || !password) {
-      setError("Please enter both username and password.");
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
+    }
+
+    if (!validation.emailValid) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    if (!validation.passwordValid) {
+      setError("Password must be at least 6 characters.");
       return;
     }
 
@@ -71,13 +136,14 @@ const StartPage = () => {
       const users = await response.json();
 
       const user = users.find(
-        (u) => u.username === username && u.password === password
+        (u) => u.email === email && u.password === password
       );
 
       if (user) {
         toast.success("🎉 Login successful!");
+        setTimeout(() => navigate("/home"), 1000);
       } else {
-        setError("Invalid username or password.");
+        setError("Invalid email or password.");
       }
     } catch (err) {
       setError("Login failed. Try again later.");
@@ -103,12 +169,15 @@ const StartPage = () => {
         <div className={styles.inputGroup}>
           <FaUser className={styles.icon} />
           <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
             onChange={handleChange}
           />
+          {!validation.emailValid && (
+            <span className={styles.validationMsg}>Invalid email format</span>
+          )}
         </div>
 
         <div className={styles.inputGroup}>
@@ -120,6 +189,11 @@ const StartPage = () => {
             value={formData.password}
             onChange={handleChange}
           />
+          {!validation.passwordValid && (
+            <span className={styles.validationMsg}>
+              Password must be at least 6 characters
+            </span>
+          )}
         </div>
 
         {isRegistering && (
@@ -132,6 +206,12 @@ const StartPage = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
             />
+            {!validation.confirmPasswordValid &&
+              formData.confirmPassword.length > 0 && (
+                <span className={styles.validationMsg}>
+                  Passwords do not match
+                </span>
+              )}
           </div>
         )}
 
@@ -142,29 +222,42 @@ const StartPage = () => {
         <button
           className={styles.loginBtn}
           onClick={isRegistering ? handleRegister : handleLogin}
+          disabled={
+            isRegistering
+              ? !validation.emailValid ||
+                !validation.passwordValid ||
+                !validation.confirmPasswordValid
+              : !validation.emailValid || !validation.passwordValid
+          }
         >
           {isRegistering ? "Register" : "Login"}
         </button>
 
         <div className={styles.links}>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsRegistering(false);
-            }}
-          >
-            Login
-          </a>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsRegistering(true);
-            }}
-          >
-            Register
-          </a>
+          {!isRegistering && (
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsRegistering(true);
+                setError("");
+              }}
+            >
+              Register
+            </a>
+          )}
+          {isRegistering && (
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsRegistering(false);
+                setError("");
+              }}
+            >
+              Login
+            </a>
+          )}
         </div>
       </div>
 

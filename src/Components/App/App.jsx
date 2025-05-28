@@ -1,13 +1,17 @@
 import React from "react";
-import "./App.css";
-import StartPage from "../StartPage/StartPage"; // Залежить від твоєї структури
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import StartPage from "../StartPage/StartPage";
+import HomePage from "../HomePage/HomePage";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <StartPage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="/home" element={<HomePage />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
