@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./StartPage.module.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import logo from "../../assets/logo.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +13,6 @@ const RegisterPage = () => {
   });
 
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -19,7 +20,6 @@ const RegisterPage = () => {
       [e.target.name]: e.target.value,
     }));
     setError("");
-    setSuccess("");
   };
 
   const handleRegister = async () => {
@@ -47,11 +47,9 @@ const RegisterPage = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Registration failed.");
-      }
+      if (!response.ok) throw new Error("Registration failed.");
 
-      setSuccess("Registration successful!");
+      toast.success("✅ Registration successful!");
       setFormData({ username: "", password: "", confirmPassword: "" });
     } catch (err) {
       setError("Failed to register. Try again later.");
@@ -105,9 +103,6 @@ const RegisterPage = () => {
         {error && (
           <div style={{ color: "red", marginTop: "10px" }}>{error}</div>
         )}
-        {success && (
-          <div style={{ color: "green", marginTop: "10px" }}>{success}</div>
-        )}
 
         <button className={styles.loginBtn} onClick={handleRegister}>
           Register
@@ -118,6 +113,9 @@ const RegisterPage = () => {
           <a href="#">Help</a>
         </div>
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
