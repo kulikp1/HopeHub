@@ -5,13 +5,13 @@ import logo from "../../assets/logo.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const RegisterPage = () => {
+const StartPage = () => {
+  const [isRegistering, setIsRegistering] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
   });
-
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -40,9 +40,7 @@ const RegisterPage = () => {
         "https://683765a02c55e01d1849bbe3.mockapi.io/users",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
         }
       );
@@ -51,8 +49,38 @@ const RegisterPage = () => {
 
       toast.success("✅ Registration successful!");
       setFormData({ username: "", password: "", confirmPassword: "" });
+      setIsRegistering(false); // Перейти до логіну після реєстрації
     } catch (err) {
       setError("Failed to register. Try again later.");
+      console.log(err);
+    }
+  };
+
+  const handleLogin = async () => {
+    const { username, password } = formData;
+
+    if (!username || !password) {
+      setError("Please enter both username and password.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://683765a02c55e01d1849bbe3.mockapi.io/users"
+      );
+      const users = await response.json();
+
+      const user = users.find(
+        (u) => u.username === username && u.password === password
+      );
+
+      if (user) {
+        toast.success("🎉 Login successful!");
+      } else {
+        setError("Invalid username or password.");
+      }
+    } catch (err) {
+      setError("Login failed. Try again later.");
       console.log(err);
     }
   };
@@ -68,7 +96,10 @@ const RegisterPage = () => {
       </div>
 
       <div className={styles.rightPanel}>
-        <h2 className={styles.loginHeader}>REGISTER</h2>
+        <h2 className={styles.loginHeader}>
+          {isRegistering ? "REGISTER" : "LOGIN"}
+        </h2>
+
         <div className={styles.inputGroup}>
           <FaUser className={styles.icon} />
           <input
@@ -79,6 +110,7 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
+
         <div className={styles.inputGroup}>
           <FaLock className={styles.icon} />
           <input
@@ -89,35 +121,56 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div className={styles.inputGroup}>
-          <FaLock className={styles.icon} />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
+
+        {isRegistering && (
+          <div className={styles.inputGroup}>
+            <FaLock className={styles.icon} />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+          </div>
+        )}
 
         {error && (
           <div style={{ color: "red", marginTop: "10px" }}>{error}</div>
         )}
 
-        <button className={styles.loginBtn} onClick={handleRegister}>
-          Register
+        <button
+          className={styles.loginBtn}
+          onClick={isRegistering ? handleRegister : handleLogin}
+        >
+          {isRegistering ? "Register" : "Login"}
         </button>
 
         <div className={styles.links}>
-          <a href="#">Login</a>
-          <a href="#">Help</a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsRegistering(false);
+            }}
+          >
+            Login
+          </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsRegistering(true);
+            }}
+          >
+            Register
+          </a>
         </div>
       </div>
 
-      {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
 
-export default RegisterPage;
+export default StartPage;
