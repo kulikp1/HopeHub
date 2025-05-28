@@ -1,69 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./StartPage.module.css";
-import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import { FaUser, FaLock } from "react-icons/fa";
 import logo from "../../assets/logo.jpg";
 
-export default function StartPage() {
-  const [isLogin, setIsLogin] = useState(true);
-
+const RegisterPage = () => {
   return (
     <div className={styles.container}>
-      <div
-        className={`${styles.leftPanel} ${
-          isLogin ? styles.loginActive : styles.signinActive
-        }`}
-      >
-        <div className={styles.leftContent}>
-          <h2
-            className={`${styles.leftButton} ${isLogin ? styles.active : ""}`}
-            onClick={() => setIsLogin(true)}
-          >
-            LOGIN
-          </h2>
-          <h2
-            className={`${styles.leftButton} ${!isLogin ? styles.active : ""}`}
-            onClick={() => setIsLogin(false)}
-          >
-            SIGN IN
-          </h2>
-        </div>
+      <div className={styles.leftPanel}>
+        <div className={styles.welcome}>Welcome</div>
+        <img src={logo} alt="Logo" className={styles.logo} />
+        <p className={styles.intro}>
+          Система управління благодійними заходами HopeHub
+        </p>
       </div>
 
       <div className={styles.rightPanel}>
-        <div className={styles.formWrapper}>
-          <img src={logo} alt="Logo" className={styles.logo} />
-          <h2 className={styles.formTitle}>{isLogin ? "LOGIN" : "SIGN IN"}</h2>
-
-          <form className={styles.form}>
-            {!isLogin && (
-              <div className={styles.inputGroup}>
-                <FaUser className={styles.icon} />
-                <input type="text" placeholder="Username" required />
-              </div>
-            )}
-
-            <div className={styles.inputGroup}>
-              <FaEnvelope className={styles.icon} />
-              <input type="email" placeholder="Email" required />
-            </div>
-
-            <div className={styles.inputGroup}>
-              <FaLock className={styles.icon} />
-              <input type="password" placeholder="Password" required />
-            </div>
-
-            {isLogin && (
-              <div className={styles.forgotPassword}>
-                <a href="#">Forgot Password?</a>
-              </div>
-            )}
-
-            <button type="submit" className={styles.loginButton}>
-              {isLogin ? "LOGIN" : "SIGN UP"}
-            </button>
-          </form>
+        <h2 className={styles.loginHeader}>REGISTER</h2>
+        <div className={styles.inputGroup}>
+          <FaUser className={styles.icon} />
+          <input type="text" placeholder="Username" />
+        </div>
+        <div className={styles.inputGroup}>
+          <FaLock className={styles.icon} />
+          <input type="password" placeholder="Password" />
+        </div>
+        <div className={styles.inputGroup}>
+          <FaLock className={styles.icon} />
+          <input type="password" placeholder="Confirm Password" />
+        </div>
+        <button className={styles.loginBtn}>Register</button>
+        <div className={styles.links}>
+          <a href="#">Login</a>
+          <a href="#">Help</a>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default RegisterPage;
