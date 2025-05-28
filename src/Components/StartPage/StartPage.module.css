@@ -10,25 +10,68 @@
   background: linear-gradient(135deg, #ff6b81, #f78ca0);
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* border-top-left-radius: 1rem; */
-  /* border-bottom-left-radius: 1rem; */
+  justify-content: flex-end;
+  padding-right: 2rem;
 }
 
 .leftContent {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.leftButtonsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.leftButton {
+  position: relative;
+  cursor: pointer;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 999px 999px 0;
+  border: 2px solid white;
+  background: transparent;
   color: white;
-}
-
-.loginLabel {
-  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  width: 140px;
+  text-align: left;
+  padding-left: 1.5rem;
+  overflow: visible;
 }
 
-.signInLabel {
-  font-size: 1.2rem;
-  font-weight: normal;
+.leftButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.active {
+  background: white !important;
+  color: #ff6b81 !important;
+  border: none;
+  position: relative;
+  z-index: 2;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -40px; /* ширина білого виступу */
+  height: 100%;
+  width: 40px;
+  background: white;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+  z-index: -1;
+}
+
+.leftButtonActive {
+  background: white;
+  color: #ff6b81;
+  border: 2px solid #ff6b81;
 }
 
 .rightPanel {
@@ -49,8 +92,9 @@
 }
 
 .logo {
-  width: 80px;
+  width: 110px;
   margin-bottom: 1rem;
+  border-radius: 50px;
 }
 
 .formTitle {
