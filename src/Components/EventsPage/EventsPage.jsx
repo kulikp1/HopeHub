@@ -2,8 +2,17 @@ import React, { useEffect, useState } from "react";
 import styles from "./EventsPage.module.css";
 import Header from "../Header/Header";
 
+const categoryOptions = [
+  { label: "Усі події", value: "all" },
+  { label: "Екологічні", value: "екологічні" },
+  { label: "Соціальні", value: "соціальні" },
+  { label: "Медичні", value: "медичні" },
+  { label: "Освітні", value: "освітні" },
+];
+
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(["all"]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -31,54 +40,101 @@ const EventsPage = () => {
     fetchEvents();
   }, []);
 
+  const filteredEvents = selectedCategories.includes("all")
+    ? events
+    : events.filter((event) =>
+        selectedCategories.includes(event.category?.toLowerCase().trim())
+      );
+
+  const handleCheckboxChange = (value) => {
+    if (value === "all") {
+      setSelectedCategories(["all"]);
+    } else {
+      setSelectedCategories((prev) => {
+        const isSelected = prev.includes(value);
+        let updated = isSelected
+          ? prev.filter((v) => v !== value)
+          : [...prev.filter((v) => v !== "all"), value];
+
+        if (updated.length === 0) {
+          updated = ["all"];
+        }
+
+        return updated;
+      });
+    }
+  };
+
   return (
     <div>
       <Header />
       <div className={styles.eventsWrapper}>
-        <h1 className={styles.title}>Усі благодійні події</h1>
-        {isLoading ? (
-          <p className={styles.loading}>Завантаження...</p>
-        ) : error ? (
-          <p className={styles.error}>{error}</p>
-        ) : (
-          <div className={styles.grid}>
-            {events.map((event) => (
-              <div key={event.id} className={styles.card}>
-                <div
-                  className={styles.image}
-                  style={{
-                    backgroundImage: `url(${
-                      event.image ||
-                      "https://via.placeholder.com/500x200.png?text=Подія"
-                    })`,
-                  }}
+        <aside className={styles.sidebar}>
+          <h2 className={styles.filterTitle}>Категорії</h2>
+          <div className={styles.filterList}>
+            {categoryOptions.map((cat) => (
+              <label key={cat.value} className={styles.checkboxLabel}>
+                <input
+                  type="checkbox"
+                  value={cat.value}
+                  checked={selectedCategories.includes(cat.value)}
+                  onChange={() => handleCheckboxChange(cat.value)}
+                  className={styles.customCheckboxInput}
                 />
-                <div className={styles.content}>
-                  <div className={styles.headerRow}>
-                    <h2 className={styles.eventTitle}>{event.title}</h2>
-                    <button className={styles.detailsButton}>Деталі</button>
-                  </div>
-                  <div className={styles.priceRow}>
-                    <div>
-                      <p className={styles.label}>Дата</p>
-                      <p className={styles.price}>{formatDate(event.date)}</p>
-                    </div>
-                    <div>
-                      <p className={styles.label}>Категорія</p>
-                      <p className={styles.price}>{event.category}</p>
-                    </div>
-                  </div>
-                  <div className={styles.footer}>
-                    <span className={styles.author}>
-                      {event.email || "Ім’я невідоме"}
-                    </span>
-                    <span className={styles.participants}>47 учасників</span>
-                  </div>
-                </div>
-              </div>
+                <span className={styles.checkboxCustom}></span>
+                {cat.label}
+              </label>
             ))}
           </div>
-        )}
+        </aside>
+
+        <main className={styles.mainContent}>
+          {isLoading ? (
+            <p className={styles.loading}>Завантаження...</p>
+          ) : error ? (
+            <p className={styles.error}>{error}</p>
+          ) : filteredEvents.length === 0 ? (
+            <p className={styles.noEvents}>Немає подій у цій категорії.</p>
+          ) : (
+            <div className={styles.grid}>
+              {filteredEvents.map((event) => (
+                <div key={event.id} className={styles.card}>
+                  <div
+                    className={styles.image}
+                    style={{
+                      backgroundImage: `url(${
+                        event.image ||
+                        "https://via.placeholder.com/500x200.png?text=Подія"
+                      })`,
+                    }}
+                  />
+                  <div className={styles.content}>
+                    <div className={styles.headerRow}>
+                      <h2 className={styles.eventTitle}>{event.title}</h2>
+                      <button className={styles.detailsButton}>Деталі</button>
+                    </div>
+                    <div className={styles.priceRow}>
+                      <div>
+                        <p className={styles.label}>Дата</p>
+                        <p className={styles.price}>{formatDate(event.date)}</p>
+                      </div>
+                      <div>
+                        <p className={styles.label}>Категорія</p>
+                        <p className={styles.price}>{event.category}</p>
+                      </div>
+                    </div>
+                    <div className={styles.footer}>
+                      <span className={styles.author}>
+                        {event.email || "Ім’я невідоме"}
+                      </span>
+                      <span className={styles.participants}>47 учасників</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
