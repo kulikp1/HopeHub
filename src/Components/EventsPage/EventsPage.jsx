@@ -67,7 +67,7 @@ const EventsPage = () => {
                 </div>
                 <div className={styles.footer}>
                   <span className={styles.author}>
-                    {event.author || "Ім’я невідоме"}
+                    {event.email || "Ім’я невідоме"}
                   </span>
                   <span className={styles.participants}>47 учасників</span>
                 </div>

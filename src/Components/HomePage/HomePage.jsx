@@ -54,13 +54,18 @@ const HomePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Додаткова перевірка
     if (timeError || !formData.time) {
       alert("Будь ласка, введіть коректний час.");
       return;
     }
 
-    const eventData = { ...formData, date };
+    const userEmail = localStorage.getItem("userEmail");
+
+    const eventData = {
+      ...formData,
+      date,
+      email: userEmail, // додаємо пошту
+    };
 
     try {
       const response = await fetch(
