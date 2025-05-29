@@ -1,53 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
 .eventsWrapper {
-  padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(15px);
-  font-family: "Segoe UI", sans-serif;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
-  min-height: 100vh;
-}
-
-.pageWrapper {
   display: flex;
-  gap: 40px;
   padding: 40px 20px;
+  gap: 40px;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(15px);
   font-family: "Segoe UI", sans-serif;
-  border-left: 1px solid rgba(255, 255, 255, 0.4);
   min-height: 100vh;
 }
 
 .sidebar {
   width: 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.categoryButton {
-  background: transparent;
-  border: 1px solid #ff6b81;
-  padding: 10px 16px;
-  border-radius: 12px;
-  color: #ff6b81;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: left;
-}
-
-.categoryButton:hover {
-  background-color: #ff6b81;
-  color: white;
-}
-
-.active {
-  background-color: #ff6b81;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
 }
 
 .mainContent {
@@ -161,61 +132,6 @@
   color: white;
 }
 
-/* Мобільна адаптація */
-@media (max-width: 768px) {
-  .grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .card {
-    width: 90%;
-  }
-}
-
-@media (max-width: 768px) {
-  .pageWrapper {
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .sidebar {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .categoryButton {
-    flex: 1;
-    text-align: center;
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
-}
-
-.eventsWrapper {
-  display: flex;
-  padding: 40px 20px;
-  gap: 40px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(15px);
-  font-family: "Segoe UI", sans-serif;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 220px;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  height: fit-content;
-  position: sticky;
-  top: 100px;
-}
-
 .filterTitle {
   font-size: 1.2rem;
   font-weight: 600;
@@ -229,109 +145,11 @@
   gap: 10px;
 }
 
-.filterButton {
-  padding: 10px 14px;
-  border-radius: 12px;
-  background-color: transparent;
-  border: 1px solid #ff6b81;
-  color: #ff6b81;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.filterButton:hover {
-  background-color: #ff6b81;
-  color: #fff;
-}
-
-.filterButton.active {
-  background-color: #ff6b81;
-  color: #fff;
-}
-
-.mainContent {
-  flex: 1;
-}
-
 .noEvents {
   font-size: 1.1rem;
   text-align: center;
   color: #b33939;
   margin-top: 40px;
-}
-
-/* решта стилів як раніше (grid, card, image, content тощо) */
-
-.customDropdownWrapper {
-  position: relative;
-  margin: 20px auto;
-  width: max-content;
-  z-index: 100;
-}
-
-.dropdownToggle {
-  padding: 10px 16px;
-  font-size: 1rem;
-  background-color: #ff6b81;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s;
-}
-
-.dropdownToggle:hover {
-  background-color: #ff4757;
-}
-
-.arrow {
-  font-size: 0.8rem;
-}
-
-.dropdownMenu {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background-color: white;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  list-style: none;
-  padding: 8px 0;
-  width: 180px;
-  animation: fadeIn 0.2s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dropdownItem {
-  padding: 10px 16px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-}
-
-.dropdownItem:hover {
-  background-color: #f1f2f6;
-}
-
-.dropdownItem.active {
-  font-weight: bold;
-  background-color: #ffe0e6;
 }
 
 .checkboxLabel {
@@ -381,4 +199,22 @@
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+  }
+  .sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+  }
 }
