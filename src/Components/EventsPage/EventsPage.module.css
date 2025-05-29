@@ -1,23 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
-.container {
+.eventsWrapper {
   padding: 40px 20px;
-  background-color: #f7f7fa;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  font-family: "Segoe UI", sans-serif;
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
 }
 
 .title {
   text-align: center;
   font-size: 2.4rem;
-  color: #222;
+  color: #ff6b81;
   margin-bottom: 30px;
+  font-weight: 600;
 }
 
 .loading,
 .error {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #d63031;
 }
 
@@ -29,45 +32,47 @@
 }
 
 .card {
-  width: 270px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  width: 280px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
 .image {
   width: 100%;
-  height: 220px;
+  height: 200px;
   background-size: cover;
   background-position: center;
+  border-bottom: 1px solid #eee;
 }
 
 .content {
-  padding: 16px;
+  padding: 20px;
 }
 
 .eventTitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 12px;
-  color: #111;
+  color: #2d3436;
+  margin-bottom: 14px;
 }
 
 .priceRow {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .label {
-  font-size: 0.8rem;
-  color: #999;
+  font-size: 0.75rem;
+  color: #888;
   margin-bottom: 4px;
 }
 
@@ -79,18 +84,7 @@
 
 .footer {
   border-top: 1px solid #eee;
-  padding-top: 12px;
-  text-align: right;
-}
-
-.participants {
-  font-size: 0.9rem;
-  color: #636e72;
-}
-
-.footer {
-  border-top: 1px solid #eee;
-  padding-top: 12px;
+  padding: 14px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -98,34 +92,50 @@
 
 .author {
   font-size: 0.85rem;
-  color: #2d3436;
+  color: #636e72;
   font-weight: 500;
 }
 
 .participants {
-  font-size: 0.9rem;
-  color: #636e72;
+  font-size: 0.85rem;
+  color: #b2bec3;
 }
 
 .headerRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .detailsButton {
   background-color: transparent;
-  color: #000;
-  border: 1px solid #000;
-  border-radius: 8px;
-  padding: 4px 12px;
+  color: #ff6b81;
+  border: 1px solid #ff6b81;
+  border-radius: 10px;
+  padding: 6px 14px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .detailsButton:hover {
-  background-color: #000;
-  color: #fff;
+  background-color: #ff6b81;
+  color: white;
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+  .grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
 }

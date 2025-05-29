@@ -31,7 +31,7 @@ const EventsPage = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.eventsWrapper}>
       <h1 className={styles.title}>Усі благодійні події</h1>
       {isLoading ? (
         <p className={styles.loading}>Завантаження...</p>
