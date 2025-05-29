@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./StartPage.module.css";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaKey } from "react-icons/fa";
 import logo from "../../assets/logo.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,14 +15,12 @@ const StartPage = () => {
     confirmPassword: "",
     volunteerKey: "",
   });
-
   const [validation, setValidation] = useState({
     emailValid: true,
     passwordValid: true,
     confirmPasswordValid: true,
     volunteerKeyValid: true,
   });
-
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -91,7 +89,7 @@ const StartPage = () => {
       return;
     }
 
-    if (!validation.volunteerKeyValid) {
+    if (volunteerKey !== "1234") {
       setError("Invalid volunteer key.");
       return;
     }
@@ -137,7 +135,7 @@ const StartPage = () => {
     const { email, password } = formData;
 
     if (!email || !password) {
-      setError("Please fill in all fields.");
+      setError("Please enter both email and password.");
       return;
     }
 
@@ -184,6 +182,12 @@ const StartPage = () => {
         <p className={styles.intro}>
           Система управління благодійними заходами HopeHub
         </p>
+        <button
+          className={styles.eventButton}
+          onClick={() => navigate("/events")}
+        >
+          Прийняти участь у події
+        </button>
       </div>
 
       <div className={styles.rightPanel}>
@@ -241,7 +245,7 @@ const StartPage = () => {
             </div>
 
             <div className={styles.inputGroup}>
-              <FaLock className={styles.icon} />
+              <FaKey className={styles.icon} />
               <input
                 type="text"
                 name="volunteerKey"
