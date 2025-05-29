@@ -13,12 +13,16 @@ const StartPage = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    volunteerKey: "",
   });
+
   const [validation, setValidation] = useState({
     emailValid: true,
     passwordValid: true,
     confirmPasswordValid: true,
+    volunteerKeyValid: true,
   });
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -54,13 +58,20 @@ const StartPage = () => {
       }));
     }
 
+    if (name === "volunteerKey") {
+      setValidation((prev) => ({
+        ...prev,
+        volunteerKeyValid: value === "1234",
+      }));
+    }
+
     setError("");
   };
 
   const handleRegister = async () => {
-    const { email, password, confirmPassword } = formData;
+    const { email, password, confirmPassword, volunteerKey } = formData;
 
-    if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword || !volunteerKey) {
       setError("Please fill in all fields.");
       return;
     }
@@ -77,6 +88,11 @@ const StartPage = () => {
 
     if (!validation.confirmPasswordValid) {
       setError("Passwords do not match.");
+      return;
+    }
+
+    if (!validation.volunteerKeyValid) {
+      setError("Invalid volunteer key.");
       return;
     }
 
@@ -104,7 +120,12 @@ const StartPage = () => {
       if (!registerResponse.ok) throw new Error("Registration failed.");
 
       toast.success("Registration successful!");
-      setFormData({ email: "", password: "", confirmPassword: "" });
+      setFormData({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        volunteerKey: "",
+      });
       setIsRegistering(false);
     } catch (err) {
       setError("Failed to register. Try again later.");
@@ -116,7 +137,7 @@ const StartPage = () => {
     const { email, password } = formData;
 
     if (!email || !password) {
-      setError("Please enter both email and password.");
+      setError("Please fill in all fields.");
       return;
     }
 
@@ -142,7 +163,7 @@ const StartPage = () => {
 
       if (user) {
         toast.success("Login successful!");
-        setIsLoading(true); // Показати лоадер
+        setIsLoading(true);
         setTimeout(() => navigate("/home"), 1000);
       } else {
         setError("Invalid email or password.");
@@ -201,22 +222,41 @@ const StartPage = () => {
         </div>
 
         {isRegistering && (
-          <div className={styles.inputGroup}>
-            <FaLock className={styles.icon} />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-            {!validation.confirmPasswordValid &&
-              formData.confirmPassword.length > 0 && (
-                <span className={styles.validationMsg}>
-                  Passwords do not match
-                </span>
-              )}
-          </div>
+          <>
+            <div className={styles.inputGroup}>
+              <FaLock className={styles.icon} />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
+              {!validation.confirmPasswordValid &&
+                formData.confirmPassword.length > 0 && (
+                  <span className={styles.validationMsg}>
+                    Passwords do not match
+                  </span>
+                )}
+            </div>
+
+            <div className={styles.inputGroup}>
+              <FaLock className={styles.icon} />
+              <input
+                type="text"
+                name="volunteerKey"
+                placeholder="Volunteer Key"
+                value={formData.volunteerKey}
+                onChange={handleChange}
+              />
+              {!validation.volunteerKeyValid &&
+                formData.volunteerKey.length > 0 && (
+                  <span className={styles.validationMsg}>
+                    Invalid volunteer key
+                  </span>
+                )}
+            </div>
+          </>
         )}
 
         {error && (
@@ -230,7 +270,8 @@ const StartPage = () => {
             isRegistering
               ? !validation.emailValid ||
                 !validation.passwordValid ||
-                !validation.confirmPasswordValid
+                !validation.confirmPasswordValid ||
+                !validation.volunteerKeyValid
               : !validation.emailValid || !validation.passwordValid
           }
         >
