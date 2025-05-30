@@ -9,9 +9,14 @@ const ChangeNews = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const userEmail = localStorage.getItem("userEmail");
+
     fetch("https://683a251d43bb370a8671f70a.mockapi.io/news")
       .then((res) => res.json())
-      .then(setNews)
+      .then((data) => {
+        const filteredNews = data.filter((item) => item.email === userEmail);
+        setNews(filteredNews);
+      })
       .catch(() => toast.error("Помилка завантаження новин"));
   }, []);
 
@@ -20,7 +25,7 @@ const ChangeNews = () => {
       await fetch(`https://683a251d43bb370a8671f70a.mockapi.io/news/${id}`, {
         method: "DELETE",
       });
-      setNews(news.filter((n) => n.id !== id));
+      setNews((prevNews) => prevNews.filter((n) => n.id !== id));
       toast.success("Новину видалено");
     } catch {
       toast.error("Помилка при видаленні");
@@ -33,18 +38,22 @@ const ChangeNews = () => {
         ⬅ Повернутись назад
       </button>
 
-      {news.map((item) => (
-        <div key={item.id} className={styles.newsModal}>
-          <h2 className={styles.newsTitle}>{item.title}</h2>
-          <p className={styles.newsText}>{item.content}</p>
-          <button
-            className={styles.deleteButton}
-            onClick={() => handleDelete(item.id)}
-          >
-            Видалити
-          </button>
-        </div>
-      ))}
+      {news.length > 0 ? (
+        news.map((item) => (
+          <div key={item.id} className={styles.newsModal}>
+            <h2 className={styles.newsTitle}>{item.title}</h2>
+            <p className={styles.newsText}>{item.content}</p>
+            <button
+              className={styles.deleteButton}
+              onClick={() => handleDelete(item.id)}
+            >
+              Видалити
+            </button>
+          </div>
+        ))
+      ) : (
+        <p>У вас ще немає доданих новин.</p>
+      )}
       <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
