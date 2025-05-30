@@ -3,6 +3,8 @@ import Calendar from "react-calendar";
 import logo from "../../assets/logo.jpg";
 import "react-calendar/dist/Calendar.css";
 import styles from "./HomePage.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HomePage = () => {
   const [date, setDate] = useState(null);
@@ -86,12 +88,12 @@ const HomePage = () => {
     e.preventDefault();
 
     if (timeError || !formData.time) {
-      alert("Будь ласка, введіть коректний час.");
+      toast.error("Будь ласка, введіть коректний час.");
       return;
     }
 
     if (!image) {
-      alert("Будь ласка, завантажте зображення.");
+      toast.error("Будь ласка, завантажте зображення.");
       return;
     }
 
@@ -116,7 +118,7 @@ const HomePage = () => {
 
       if (!response.ok) throw new Error("Помилка при надсиланні даних");
 
-      alert("Захід успішно створено!");
+      toast.success("Захід успішно створено!");
       setFormData({
         title: "",
         description: "",
@@ -129,7 +131,7 @@ const HomePage = () => {
       setImage(null);
     } catch (error) {
       console.error("Error:", error);
-      alert("Помилка при створенні заходу.");
+      toast.error("Помилка при створенні заходу.");
     }
   };
 
@@ -145,7 +147,6 @@ const HomePage = () => {
         </div>
 
         <div className={styles.rightPanel}>
-          <h2 className={styles.loginHeader}>Створити захід</h2>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
               <input
@@ -260,6 +261,7 @@ const HomePage = () => {
               Додати захід
             </button>
           </form>
+          <ToastContainer position="top-right" autoClose={3000} />
         </div>
       </div>
     </div>
