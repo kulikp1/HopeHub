@@ -6,6 +6,8 @@ import EventsPage from "../EventsPage/EventsPage";
 import SponsorPage from "../SponsorPage/SponsorPage";
 import EventRegistration from "../EventRegistration/EventRegistration";
 import News from "../NewsPage/NewsPage";
+import ChangeNews from "../ChangeNews/ChangeNews";
+import ChangeEvents from "../ChangeEvents/ChangeEvents";
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
           element={<EventRegistration />}
         />
         <Route path="/news" element={<News />} />
+        <Route path="/changeNews" element={<ChangeNews />} />
+        <Route path="/changeEvents" element={<ChangeEvents />} />
       </Routes>
     </Router>
   );
