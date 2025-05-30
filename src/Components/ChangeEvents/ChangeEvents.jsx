@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./ChangeEvents.module.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ChangeEvents = () => {
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://683765a02c55e01d1849bbe3.mockapi.io/events")
@@ -27,6 +29,10 @@ const ChangeEvents = () => {
 
   return (
     <div className={styles.eventsContainer}>
+      <button className={styles.backButton} onClick={() => navigate(-1)}>
+        ⬅ Повернутись назад
+      </button>
+
       {events.map((event) => (
         <div key={event.id} className={styles.eventModal}>
           <h2 className={styles.eventTitle}>{event.title}</h2>
