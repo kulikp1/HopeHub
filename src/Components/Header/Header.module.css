@@ -92,3 +92,14 @@
     height: 52px;
   }
 }
+
+.news {
+  color: #ffffff;
+  cursor: pointer;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.news:hover {
+  color: #ffeaea;
+  text-decoration: underline;
+}

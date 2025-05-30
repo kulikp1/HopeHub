@@ -13,6 +13,10 @@ const Header = () => {
         <img src={logo} alt="Logo" className={styles.logo} />
       </div>
       <div className={styles.contactInfo}>
+        <p className={styles.news} onClick={() => navigate("/news")}>
+          Новини
+        </p>
+
         <p className={styles.email}>
           <a href="mailto:charity@example.com">charity@example.com</a>
         </p>
