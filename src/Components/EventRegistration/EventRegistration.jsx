@@ -50,21 +50,47 @@ const EventRegistration = () => {
 
     emailjs
       .send(
-        "service_iipo9jf", // Замінити на свій ID сервісу
-        "template_zmkz95g", // Замінити на свій ID шаблону
+        "service_iipo9jf", // замінити на свій ID сервісу
+        "template_zmkz95g", // замінити на свій ID шаблону
         templateParams,
-        "14JdtebUlkz_ibUbx" // Публічний ключ
+        "14JdtebUlkz_ibUbx" // публічний ключ
       )
       .then(() => {
-        toast.success("еєстрація успішна!");
-        setName("");
-        setEmail("");
-        setRole("");
-        setComment("");
+        // Після успішного надсилання листа, зберегти користувача в MockAPI
+        fetch("https://683a251d43bb370a8671f70a.mockapi.io/registerUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            role,
+            comment,
+            eventTitle,
+          }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error("Помилка збереження користувача");
+            }
+            return res.json();
+          })
+          .then(() => {
+            toast.success("Реєстрація успішна!");
+            setName("");
+            setEmail("");
+            setRole("");
+            setComment("");
+          })
+          .catch((err) => {
+            console.error("Помилка при збереженні в MockAPI:", err);
+            toast.warning("Реєстрація відправлена, але не збережена.");
+          });
       })
       .catch((err) => {
-        console.error("Помилка надсилання:", err);
-        toast.error("Щось пішло не так. Спробуйте ще раз.");
+        console.error("Помилка надсилання email:", err);
+        toast.error("❌ Щось пішло не так. Спробуйте ще раз.");
       });
   };
 
