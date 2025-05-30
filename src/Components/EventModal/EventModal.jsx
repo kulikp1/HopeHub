@@ -1,8 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./EventModal.module.css";
 
 const EventModal = ({ event, onClose, formatDate }) => {
+  const navigate = useNavigate();
+
   if (!event) return null;
+
+  const handleSponsorClick = () => {
+    navigate("/sponsor"); // змінити шлях, якщо потрібна інша сторінка
+  };
 
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -33,7 +40,9 @@ const EventModal = ({ event, onClose, formatDate }) => {
           </div>
 
           <button className={styles.participateButton}>Прийняти участь</button>
-          <button className={styles.sponsorButton}>Стати спонсором</button>
+          <button className={styles.sponsorButton} onClick={handleSponsorClick}>
+            Стати спонсором
+          </button>
         </div>
       </div>
     </div>
