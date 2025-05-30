@@ -5,6 +5,7 @@ import HomePage from "../HomePage/HomePage";
 import EventsPage from "../EventsPage/EventsPage";
 import SponsorPage from "../SponsorPage/SponsorPage";
 import EventRegistration from "../EventRegistration/EventRegistration";
+import News from "../NewsPage/NewsPage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           path="/event/:eventId/register"
           element={<EventRegistration />}
         />
+        <Route path="/news" element={<News />} />
       </Routes>
     </Router>
   );
