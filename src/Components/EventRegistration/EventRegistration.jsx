@@ -75,6 +75,7 @@ const EventRegistration = () => {
                 <option value="Кухар">Кухар</option>
                 <option value="Швея">Швея</option>
                 <option value="Журналіст">Журналіст</option>
+                <option value="Медійна особа">Медійна особа</option>
                 <option value="Вільні руки">"Вільні руки"</option>
               </select>
               <input
