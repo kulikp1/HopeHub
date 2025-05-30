@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./EventsPage.module.css";
 import Header from "../Header/Header";
+import EventModal from "../EventModal/EventModal";
 
 const categoryOptions = [
   { label: "Усі події", value: "all" },
@@ -15,6 +16,8 @@ const EventsPage = () => {
   const [selectedCategories, setSelectedCategories] = useState(["all"]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -65,6 +68,16 @@ const EventsPage = () => {
     }
   };
 
+  const openModal = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+    setShowModal(false);
+  };
+
   return (
     <div>
       <Header />
@@ -111,7 +124,12 @@ const EventsPage = () => {
                   <div className={styles.content}>
                     <div className={styles.headerRow}>
                       <h2 className={styles.eventTitle}>{event.title}</h2>
-                      <button className={styles.detailsButton}>Деталі</button>
+                      <button
+                        className={styles.detailsButton}
+                        onClick={() => openModal(event)}
+                      >
+                        Деталі
+                      </button>
                     </div>
                     <div className={styles.priceRow}>
                       <div>
@@ -136,6 +154,14 @@ const EventsPage = () => {
           )}
         </main>
       </div>
+
+      {showModal && selectedEvent && (
+        <EventModal
+          event={selectedEvent}
+          onClose={closeModal}
+          formatDate={formatDate}
+        />
+      )}
     </div>
   );
 };

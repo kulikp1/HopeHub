@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.modal {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  max-width: 580px;
+  width: 100%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  animation: fadeIn 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid #eee;
+  border-radius: 20px 20px 0 0;
+}
+
+.content {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #2d3436;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #636e72;
+  font-weight: 400;
+}
+
+.details {
+  font-size: 0.9rem;
+  color: #636e72;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.participateButton {
+  margin-top: 16px;
+  align-self: flex-start;
+  background-color: transparent;
+  border: 2px solid #ff6b81;
+  color: #ff6b81;
+  border-radius: 12px;
+  padding: 10px 26px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.sponsorButton {
+  align-self: flex-start;
+  background-color: transparent;
+  border: 2px solid #ff6b81;
+  color: #ff6b81;
+  border-radius: 12px;
+  padding: 10px 26px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  margin-bottom: 10px;
+}
+
+.participateButton:hover,
+.sponsorButton:hover {
+  background-color: #ff6b81;
+  color: white;
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 26px;
+  border: none;
+  background: white;
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  color: rgb(236, 98, 98);
+  cursor: pointer;
+  transition: color 0.25s ease;
+  border: 1px solid red;
+
+  user-select: none;
+}
+
+.closeButton:hover {
+  color: #fa0026;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .modal {
+    max-width: 90vw;
+  }
+}
