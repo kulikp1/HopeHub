@@ -218,15 +218,13 @@ const HomePage = () => {
           <div className={styles.actionsContainer}>
             <button
               className={styles.actionBtn}
-              onClick={() =>
-                toast.info("Редагування заходів ще не реалізовано.")
-              }
+              onClick={() => navigate("/changeEvents")}
             >
               Редагувати заходи
             </button>
             <button
               className={styles.actionBtn}
-              onClick={() => toast.info("Редагування новин ще не реалізовано.")}
+              onClick={() => navigate("/changeNews")}
             >
               Редагувати новини
             </button>
