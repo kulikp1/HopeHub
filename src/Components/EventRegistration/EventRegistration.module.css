@@ -24,20 +24,6 @@
   flex-direction: column;
   gap: 16px;
 }
-/* 
-input {
-  padding: 14px 16px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  transition: border 0.3s ease;
-}
-
-input:focus {
-  border-color: #ff6b81;
-  outline: none;
-} */
 
 .registrationBtn,
 .backBtn {
