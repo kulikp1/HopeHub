@@ -27,11 +27,31 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch(
-          "https://683765a02c55e01d1849bbe3.mockapi.io/events"
-        );
-        const data = await response.json();
-        setEvents(data);
+        const [eventsRes, registrationsRes] = await Promise.all([
+          fetch("https://683765a02c55e01d1849bbe3.mockapi.io/events"),
+          fetch("https://683a251d43bb370a8671f70a.mockapi.io/registerUser"),
+        ]);
+
+        if (!eventsRes.ok || !registrationsRes.ok)
+          throw new Error("Помилка при завантаженні даних");
+
+        const eventsData = await eventsRes.json();
+        const registrationsData = await registrationsRes.json();
+
+        // Підрахунок реєстрацій по назві події
+        const registrationCounts = {};
+        registrationsData.forEach((r) => {
+          const title = r.eventTitle;
+          registrationCounts[title] = (registrationCounts[title] || 0) + 1;
+        });
+
+        // Додаємо кількість реєстрацій до кожної події
+        const enrichedEvents = eventsData.map((event) => ({
+          ...event,
+          registrationCount: registrationCounts[event.title] || 0,
+        }));
+
+        setEvents(enrichedEvents);
       } catch (err) {
         setError("Не вдалося завантажити події.");
         console.error(err);
@@ -145,7 +165,10 @@ const EventsPage = () => {
                       <span className={styles.author}>
                         {event.email || "Ім’я невідоме"}
                       </span>
-                      <span className={styles.participants}>47 учасників</span>
+                      <span className={styles.participants}>
+                        {event.registrationCount} учасник
+                        {event.registrationCount === 1 ? "" : "ів"}
+                      </span>
                     </div>
                   </div>
                 </div>
