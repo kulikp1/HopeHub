@@ -275,3 +275,32 @@
   box-shadow: 0 8px 30px rgba(217, 66, 95, 0.6);
   transform: translateY(-2px);
 }
+
+.actionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.actionBtn,
+.logoutBtn {
+  padding: 12px 36px;
+  background-color: #ff6b81;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 20px rgba(255, 107, 129, 0.3);
+}
+
+.actionBtn:hover,
+.logoutBtn:hover {
+  background-color: #ff4d6d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+}

@@ -5,9 +5,12 @@ import "react-calendar/dist/Calendar.css";
 import styles from "./HomePage.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [formType, setFormType] = useState("event");
+
+  const navigate = useNavigate();
 
   const [date, setDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -163,7 +166,7 @@ const HomePage = () => {
 
       try {
         const response = await fetch(
-          "https://683a251d43bb370a8671f70a.mockapi.io/news", // ✅ Нова адреса для новин
+          "https://683a251d43bb370a8671f70a.mockapi.io/news",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -212,13 +215,38 @@ const HomePage = () => {
               Додати новину
             </button>
           </div>
+          <div className={styles.actionsContainer}>
+            <button
+              className={styles.actionBtn}
+              onClick={() =>
+                toast.info("Редагування заходів ще не реалізовано.")
+              }
+            >
+              Редагувати заходи
+            </button>
+            <button
+              className={styles.actionBtn}
+              onClick={() => toast.info("Редагування новин ще не реалізовано.")}
+            >
+              Редагувати новини
+            </button>
+            <button
+              className={styles.logoutBtn}
+              onClick={() => {
+                toast.success("Ви вийшли з системи");
+                localStorage.removeItem("userEmail");
+                setTimeout(() => navigate("/"), 1000);
+              }}
+            >
+              Вийти
+            </button>
+          </div>
         </div>
 
         <div className={styles.rightPanel}>
           <form className={styles.form} onSubmit={handleSubmit}>
             {formType === "event" ? (
               <>
-                {/* Форма заходу */}
                 <div className={styles.inputGroup}>
                   <input
                     type="text"
@@ -306,7 +334,6 @@ const HomePage = () => {
               </>
             ) : (
               <>
-                {/* Форма новини */}
                 <div className={styles.inputGroup}>
                   <input
                     type="text"
@@ -318,7 +345,7 @@ const HomePage = () => {
                   />
                 </div>
                 <div className={styles.inputGroup}>
-                  <textarea
+                  <input
                     name="content"
                     placeholder="Текст новини"
                     value={newsData.content}
