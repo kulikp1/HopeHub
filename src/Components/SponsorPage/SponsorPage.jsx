@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./SponsorPage.module.css";
 import Header from "../Header/Header";
 import donatePhoto from "../../assets/qrDonate.jpg";
 
 const SponsorPage = () => {
+  const { id } = useParams(); // Отримуємо id з URL
   const [event, setEvent] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://683765a02c55e01d1849bbe3.mockapi.io/events/1")
+    fetch(`https://683765a02c55e01d1849bbe3.mockapi.io/events/${id}`)
       .then((res) => res.json())
       .then((data) => setEvent(data))
       .catch((err) => console.error("Помилка при завантаженні події", err));
-  }, []);
+  }, [id]);
 
   if (!event) return <p className={styles.loading}>Завантаження...</p>;
 
@@ -24,7 +25,6 @@ const SponsorPage = () => {
         <div className={styles.contentWrapper}>
           <div className={styles.left}>
             <img className={styles.image} src={event.image} alt={event.title} />
-
             <div className={styles.info}>
               <h2>{event.title}</h2>
               <p>
@@ -51,7 +51,7 @@ const SponsorPage = () => {
               </p>
 
               <button
-                className={styles.backButton}
+                className={styles.donateLink}
                 onClick={() => navigate("/events")}
               >
                 ← Повернутися
@@ -64,13 +64,11 @@ const SponsorPage = () => {
             <p>
               Скористайтесь QR-кодом або перейдіть за посиланням для донату:
             </p>
-
             <img
               className={styles.qr}
               src={donatePhoto}
               alt="QR code for donation"
             />
-
             <a
               className={styles.donateLink}
               href="https://send.monobank.ua/jar/8p1GN7Jv1H/"

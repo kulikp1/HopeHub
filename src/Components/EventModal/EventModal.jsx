@@ -8,7 +8,7 @@ const EventModal = ({ event, onClose, formatDate }) => {
   if (!event) return null;
 
   const handleSponsorClick = () => {
-    navigate("/sponsor"); // змінити шлях, якщо потрібна інша сторінка
+    navigate(`/sponsor/${event.id}`);
   };
 
   return (
