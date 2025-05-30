@@ -51,7 +51,10 @@ const EventRegistration = () => {
           <p className={styles.error}>{error}</p>
         ) : (
           <>
-            <h2 className={styles.title}>Реєстрація на подію: {eventTitle}</h2>
+            <h2 className={styles.title}>
+              Реєстрація на подію: <br />
+              {eventTitle}
+            </h2>
             <form onSubmit={handleSubmit} className={styles.form}>
               <input
                 className={styles.formInput}

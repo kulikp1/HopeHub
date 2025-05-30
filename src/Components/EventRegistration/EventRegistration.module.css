@@ -15,7 +15,7 @@
   font-size: 1.6rem;
   font-weight: 600;
   color: #2d3436;
-  margin-bottom: 24px;
+  margin-bottom: 56px;
   text-align: center;
 }
 
@@ -25,8 +25,7 @@
   gap: 16px;
 }
 
-.registrationBtn,
-.backBtn {
+.registrationBtn {
   background-color: #ff6b81;
   color: white;
   font-size: 1rem;
@@ -36,10 +35,10 @@
   border-radius: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 24px;
 }
 
-.registrationBtn:hover,
-.backBtn:hover {
+.registrationBtn:hover {
   background-color: #e0566f;
 }
 
@@ -51,7 +50,7 @@
 }
 
 .backBtn {
-  margin: 16px auto 0;
+  margin: 32px auto 0 auto;
   padding: 10px 20px;
   font-size: 16px;
   background-color: #ff6b81;
@@ -70,7 +69,7 @@
 .formInput {
   width: 100%;
   padding: 12px 16px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 16px;
