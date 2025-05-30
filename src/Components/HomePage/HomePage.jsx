@@ -8,7 +8,6 @@ const HomePage = () => {
   const [date, setDate] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [timeError, setTimeError] = useState("");
-
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -18,23 +17,18 @@ const HomePage = () => {
     time: "",
   });
 
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "time") {
-      validateTime(value);
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "time") validateTime(value);
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateTime = (value) => {
-    // Дозволяє формати типу 7:00, 07:00, 17:30
     const timeRegex = /^(?:[0-9]|[01][0-9]|2[0-3]):[0-5][0-9]$/;
-
     if (value === "") {
       setTimeError("Поле не може бути порожнім");
     } else if (!timeRegex.test(value)) {
@@ -51,6 +45,43 @@ const HomePage = () => {
     setShowCalendar(false);
   };
 
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const uploadData = new FormData();
+    uploadData.append("file", file);
+    uploadData.append("upload_preset", "hopehub_unsigned_upload"); // <-- ВАЖЛИВО: заміни на правильний upload preset
+
+    setUploading(true);
+    setUploadError("");
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/drzzk5gnc/image/upload",
+        {
+          method: "POST",
+          body: uploadData,
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok && data.secure_url) {
+        setImage(data.secure_url);
+      } else {
+        setUploadError(
+          data.error?.message || "Помилка при отриманні зображення."
+        );
+      }
+    } catch (err) {
+      console.error("Upload error:", err);
+      setUploadError("Не вдалося завантажити фото.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,12 +90,18 @@ const HomePage = () => {
       return;
     }
 
+    if (!image) {
+      alert("Будь ласка, завантажте зображення.");
+      return;
+    }
+
     const userEmail = localStorage.getItem("userEmail");
 
     const eventData = {
       ...formData,
       date,
-      email: userEmail, // додаємо пошту
+      image,
+      email: userEmail,
     };
 
     try {
@@ -89,6 +126,7 @@ const HomePage = () => {
         time: "",
       });
       setDate(null);
+      setImage(null);
     } catch (error) {
       console.error("Error:", error);
       alert("Помилка при створенні заходу.");
@@ -160,23 +198,44 @@ const HomePage = () => {
                 <option value="освітні">Освітні</option>
               </select>
             </div>
-
             <div className={styles.inputGroup}>
-              <label htmlFor="time"></label>
               <input
                 type="text"
                 name="time"
-                placeholder=" Час проведення: наприклад, 7:00 або 17:00"
+                placeholder="Час проведення: 7:00 або 17:00"
                 value={formData.time}
                 onChange={handleChange}
                 required
               />
               {timeError && <div className={styles.errorText}>{timeError}</div>}
             </div>
-
+            <div className={styles.imageUploadGroup}>
+              <label htmlFor="imageUpload" className={styles.customFileUpload}>
+                Додати зображення
+              </label>
+              <input
+                id="imageUpload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className={styles.hiddenFileInput}
+              />
+              {uploading && <p>Завантаження...</p>}
+              {uploadError && (
+                <div className={styles.errorText}>{uploadError}</div>
+              )}
+              {image && (
+                <div className={styles.preview}>
+                  <img
+                    className={styles.previewImage}
+                    src={image}
+                    alt="Попередній перегляд"
+                  />
+                </div>
+              )}
+            </div>
             <div className={styles.calendarWrapper}>
               <label className={styles.calendarLabel}>Дата проведення:</label>
-
               {showCalendar && (
                 <div className={styles.calendarPopupAbove}>
                   <Calendar
@@ -185,7 +244,6 @@ const HomePage = () => {
                   />
                 </div>
               )}
-
               <button
                 type="button"
                 className={styles.calendarToggle}
@@ -194,11 +252,10 @@ const HomePage = () => {
                 {date ? date.toLocaleDateString() : "Обрати дату"}
               </button>
             </div>
-
             <button
               className={styles.loginBtn}
               type="submit"
-              disabled={!!timeError}
+              disabled={!!timeError || uploading}
             >
               Додати захід
             </button>
