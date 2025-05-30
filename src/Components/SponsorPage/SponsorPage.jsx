@@ -51,7 +51,7 @@ const SponsorPage = () => {
               </p>
 
               <button
-                className={styles.donateLink}
+                className={styles.backButton}
                 onClick={() => navigate("/events")}
               >
                 ← Повернутися
