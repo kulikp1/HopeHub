@@ -4,6 +4,7 @@ import StartPage from "../StartPage/StartPage";
 import HomePage from "../HomePage/HomePage";
 import EventsPage from "../EventsPage/EventsPage";
 import SponsorPage from "../SponsorPage/SponsorPage";
+import EventRegistration from "../EventRegistration/EventRegistration";
 
 const App = () => {
   return (
@@ -13,6 +14,10 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/sponsor/:id" element={<SponsorPage />} />
+        <Route
+          path="/event/:eventId/register"
+          element={<EventRegistration />}
+        />
       </Routes>
     </Router>
   );

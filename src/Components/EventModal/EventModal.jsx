@@ -32,14 +32,17 @@ const EventModal = ({ event, onClose, formatDate }) => {
           <p className={styles.description}>
             {event.description || "Опис події тимчасово відсутній."}
           </p>
-
           <div className={styles.details}>
             <p>Категорія: {event.category}</p>
             <p>Дата: {formatDate(event.date)}</p>
             <p>Контактний email: {event.email || "не вказано"}</p>
           </div>
-
-          <button className={styles.participateButton}>Прийняти участь</button>
+          <button
+            className={styles.participateButton}
+            onClick={() => navigate(`/event/${event.id}/register`)}
+          >
+            Прийняти участь
+          </button>
           <button className={styles.sponsorButton} onClick={handleSponsorClick}>
             Стати спонсором
           </button>
