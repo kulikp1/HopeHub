@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 import donatePhoto from "../../assets/qrDonate.jpg";
 
 const SponsorPage = () => {
-  const { id } = useParams(); // Отримуємо id з URL
+  const { id } = useParams();
   const [event, setEvent] = useState(null);
   const navigate = useNavigate();
 
