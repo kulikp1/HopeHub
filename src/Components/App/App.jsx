@@ -21,7 +21,6 @@ const PrivateRoute = ({ element, isAuthenticated }) => {
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Перевірка логіна через localStorage
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail");
     setIsAuthenticated(!!userEmail);
