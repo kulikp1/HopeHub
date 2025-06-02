@@ -14,7 +14,6 @@ import News from "../NewsPage/NewsPage";
 import ChangeNews from "../ChangeNews/ChangeNews";
 import ChangeEvents from "../ChangeEvents/ChangeEvents";
 
-// Приватна маршрутизація
 const PrivateRoute = ({ element, isAuthenticated }) => {
   return isAuthenticated ? element : <Navigate to="/" />;
 };
