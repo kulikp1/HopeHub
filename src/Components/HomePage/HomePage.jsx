@@ -151,7 +151,6 @@ const HomePage = () => {
         toast.error("Помилка при створенні заходу.");
       }
     } else {
-      // Валідація для новини
       if (!newsData.title || !newsData.content) {
         toast.error("Заповніть всі поля новини.");
         return;
