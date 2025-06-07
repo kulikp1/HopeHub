@@ -125,7 +125,7 @@ const HomePage = () => {
 
       try {
         const response = await fetch(
-          "https://683765a02c55e01d1849bbe3.mockapi.io/events", // Події
+          "https://683765a02c55e01d1849bbe3.mockapi.io/events",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
