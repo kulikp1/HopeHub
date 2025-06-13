@@ -14,7 +14,7 @@ const News = () => {
         );
         if (!response.ok) throw new Error("Помилка при завантаженні новин");
         const data = await response.json();
-        setNewsList(data.reverse()); // Сортування: найновіші зверху
+        setNewsList(data.reverse());
       } catch (error) {
         console.error("Fetch news error:", error);
       } finally {
