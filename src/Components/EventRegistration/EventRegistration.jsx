@@ -53,7 +53,7 @@ const EventRegistration = () => {
         "service_iipo9jf",
         "template_zmkz95g",
         templateParams,
-        "14JdtebUlkz_ibUbx" // публічний ключ
+        "14JdtebUlkz_ibUbx"
       )
       .then(() => {
         // Після успішного надсилання листа, зберегти користувача в MockAPI
