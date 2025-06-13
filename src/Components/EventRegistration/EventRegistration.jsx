@@ -50,7 +50,7 @@ const EventRegistration = () => {
 
     emailjs
       .send(
-        "service_iipo9jf", // замінити на свій ID сервісу
+        "service_iipo9jf",
         "template_zmkz95g", // замінити на свій ID шаблону
         templateParams,
         "14JdtebUlkz_ibUbx" // публічний ключ
