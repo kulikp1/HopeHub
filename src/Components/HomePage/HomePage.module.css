@@ -139,7 +139,6 @@
   box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
 }
 
-/* 🔽 Адаптація для мобільних */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
