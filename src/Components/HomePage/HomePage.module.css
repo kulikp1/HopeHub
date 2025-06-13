@@ -190,7 +190,7 @@
 
 .calendarPopupAbove {
   position: absolute;
-  bottom: 60px; /* Піднімає над кнопкою */
+  bottom: 60px;
   z-index: 10;
   background-color: white;
   border-radius: 12px;
