@@ -38,14 +38,12 @@ const EventsPage = () => {
         const eventsData = await eventsRes.json();
         const registrationsData = await registrationsRes.json();
 
-        // Підрахунок реєстрацій по назві події
         const registrationCounts = {};
         registrationsData.forEach((r) => {
           const title = r.eventTitle;
           registrationCounts[title] = (registrationCounts[title] || 0) + 1;
         });
 
-        // Додаємо кількість реєстрацій до кожної події
         const enrichedEvents = eventsData.map((event) => ({
           ...event,
           registrationCount: registrationCounts[event.title] || 0,
