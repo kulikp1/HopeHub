@@ -56,7 +56,6 @@ const EventRegistration = () => {
         "14JdtebUlkz_ibUbx"
       )
       .then(() => {
-        // Після успішного надсилання листа, зберегти користувача в MockAPI
         fetch("https://683a251d43bb370a8671f70a.mockapi.io/registerUser", {
           method: "POST",
           headers: {
