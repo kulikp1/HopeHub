@@ -162,7 +162,6 @@ const StartPage = () => {
       if (user) {
         toast.success("Login successful!");
 
-        // ЗБЕРІГАННЯ EMAIL У LOCALSTORAGE
         localStorage.setItem("userEmail", user.email);
 
         setIsLoading(true);
